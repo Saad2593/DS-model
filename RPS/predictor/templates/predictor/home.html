@@ -1,0 +1,97 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RainCheck - Will it rain today?</title>
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <i class="fas fa-cloud"></i>
+                <span>RainCheck</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">How It Works</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <main>
+            <section class="hero">
+                <div class="hero-content">
+                    <h1>Will it rain today?</h1>
+                    <p>Get accurate rain predictions for your location with our advanced weather forecasting technology.</p>
+                    <a href="predict" class="btn-primary">Try Now</a>
+                </div>
+                <div class="hero-image">
+                    <div class="weather-icons">
+                        <div class="icon-container">
+                            <i class="fas fa-sun"></i>
+                            <i class="fas fa-tint"></i>
+                        </div>
+                        <i class="fas fa-umbrella"></i>
+                    </div>
+                </div>
+            </section>
+
+            <section class="how-it-works">
+                <div class="section-header">
+                    <h2>How It Works</h2>
+                    <p>Our advanced algorithm analyzes real-time weather data to provide accurate rain predictions for your specific location.</p>
+                </div>
+                <div class="steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h3>Enter Your Location</h3>
+                            <p>Simply provide your city or zip code to get started.</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h3>Instant Analysis</h3>
+                            <p>Our system processes current weather patterns and historical data.</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h3>Get Your Prediction</h3>
+                            <p>Receive a clear yes or no answer about today's rain forecast.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <i class="fas fa-cloud"></i>
+                    <span>RainCheck</span>
+                </div>
+                <p class="copyright">© <span id="year"></span> RainCheck. All rights reserved.</p>
+                <div class="footer-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Set current year in footer
+        document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>

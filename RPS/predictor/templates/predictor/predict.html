@@ -1,0 +1,193 @@
+{% comment %} 
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RainCheck - Prediction</title>
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header class="predict-header">
+            <a href="index.html" class="back-link">
+                <i class="fas fa-arrow-left"></i>
+                <span>Back to Home</span>
+            </a>
+        </header>
+
+        <main class="predict-main">
+            <div class="predict-container">
+                <div class="predict-title">
+                    <i class="fas fa-cloud"></i>
+                    <h1>Rain Prediction</h1>
+                </div>
+
+                <div class="predict-form-container">
+                    <form id="predict-form" class="predict-form">
+                        <div class="form-group">
+                            <label for="location">Enter your location</label>
+                            <input type="text" id="location" placeholder="City or ZIP code" required>
+                        </div>
+                        <button type="submit" class="btn-primary" id="check-btn">Check Rain Forecast</button>
+                    </form>
+                </div>
+
+                <div class="prediction-result" id="prediction-result" style="display: none;">
+                    <div class="prediction-icon" id="prediction-icon">
+                        <!-- Icon will be inserted by JavaScript -->
+                    </div>
+                    <h2 id="prediction-text"></h2>
+                    <p id="prediction-description"></p>
+                </div>
+            </div>
+        </main>
+
+        <footer class="predict-footer">
+            <p class="copyright">© <span id="year"></span> RainCheck. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script>
+        // Set current year in footer
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Handle form submission
+        document.getElementById('predict-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const location = document.getElementById('location').value;
+            if (!location) return;
+            
+            const checkBtn = document.getElementById('check-btn');
+            checkBtn.textContent = 'Checking...';
+            checkBtn.disabled = true;
+            
+            // Simulate API call with timeout
+            setTimeout(() => {
+                // Random prediction for demo purposes
+                const willRain = Math.random() > 0.5;
+                
+                // Update UI with prediction
+                const resultElement = document.getElementById('prediction-result');
+                const iconElement = document.getElementById('prediction-icon');
+                const textElement = document.getElementById('prediction-text');
+                const descriptionElement = document.getElementById('prediction-description');
+                
+                iconElement.innerHTML = willRain 
+                    ? '<i class="fas fa-tint"></i>' 
+                    : '<i class="fas fa-sun"></i>';
+                
+                iconElement.className = 'prediction-icon ' + (willRain ? 'rain' : 'sun');
+                
+                textElement.textContent = willRain 
+                    ? 'Yes, it will rain today!' 
+                    : 'No rain expected today!';
+                
+                descriptionElement.textContent = willRain 
+                    ? 'Don\'t forget your umbrella when heading out!' 
+                    : 'Enjoy the dry weather today!';
+                
+                resultElement.style.display = 'flex';
+                
+                // Reset button
+                checkBtn.textContent = 'Check Rain Forecast';
+                checkBtn.disabled = false;
+            }, 1500);
+        });
+    </script>
+</body>
+</html> {% endcomment %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Rain Prediction</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+    <div class="container mt-5">
+        <div class="card shadow-lg p-4 rounded">
+            <h2 class="text-center mb-4">Rain Prediction Form</h2>
+
+            {% if prediction %}
+                <div class="alert alert-info text-center">
+                    <strong>Prediction:</strong> {{ prediction }}
+                </div>
+            {% endif %}
+
+            <form method="post">
+                {% csrf_token %}
+
+                <div class="row g-3">
+                    <!-- First Column -->
+                    <div class="col-md-6">
+                        <label class="form-label">MinTemp</label>
+                        <input type="number" step="any" name="MinTemp" class="form-control" required>
+
+                        <label class="form-label mt-3">MaxTemp</label>
+                        <input type="number" step="any" name="MaxTemp" class="form-control" required>
+
+                        <label class="form-label mt-3">Rainfall</label>
+                        <input type="number" step="any" name="Rainfall" class="form-control" required>
+
+                        <label class="form-label mt-3">Evaporation</label>
+                        <input type="number" step="any" name="Evaporation" class="form-control" required>
+
+                        <label class="form-label mt-3">Sunshine</label>
+                        <input type="number" step="any" name="Sunshine" class="form-control" required>
+
+                        <label class="form-label mt-3">WindGustSpeed</label>
+                        <input type="number" step="any" name="WindGustSpeed" class="form-control" required>
+
+                        <label class="form-label mt-3">WindSpeed9am</label>
+                        <input type="number" step="any" name="WindSpeed9am" class="form-control" required>
+
+                        <label class="form-label mt-3">WindSpeed3pm</label>
+                        <input type="number" step="any" name="WindSpeed3pm" class="form-control" required>
+                    </div>
+
+                    <!-- Second Column -->
+                    <div class="col-md-6">
+                        <label class="form-label">Humidity9am</label>
+                        <input type="number" step="any" name="Humidity9am" class="form-control" required>
+
+                        <label class="form-label mt-3">Humidity3pm</label>
+                        <input type="number" step="any" name="Humidity3pm" class="form-control" required>
+
+                        <label class="form-label mt-3">Pressure9am</label>
+                        <input type="number" step="any" name="Pressure9am" class="form-control" required>
+
+                        <label class="form-label mt-3">Pressure3pm</label>
+                        <input type="number" step="any" name="Pressure3pm" class="form-control" required>
+
+                        <label class="form-label mt-3">Cloud9am</label>
+                        <input type="number" step="any" name="Cloud9am" class="form-control" required>
+
+                        <label class="form-label mt-3">Cloud3pm</label>
+                        <input type="number" step="any" name="Cloud3pm" class="form-control" required>
+
+                        <label class="form-label mt-3">Temp9am</label>
+                        <input type="number" step="any" name="Temp9am" class="form-control" required>
+
+                        <label class="form-label mt-3">Temp3pm</label>
+                        <input type="number" step="any" name="Temp3pm" class="form-control" required>
+
+                        <label class="form-label mt-3">RainToday (0 = No, 1 = Yes)</label>
+                        <input type="number" step="1" min="0" max="1" name="RainToday" class="form-control" required>
+                    </div>
+                </div>
+
+                <div class="text-center mt-4">
+                    <button type="submit" class="btn btn-primary btn-lg">Predict</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
